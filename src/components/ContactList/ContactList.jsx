@@ -1,5 +1,8 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { IoIosTrash, IoLogoReddit } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from 'redux/contactsSlice';
+import { getFilteredContacts } from 'redux/selectors';
 
 import {
   ListBtn,
@@ -10,7 +13,10 @@ import {
   ContactsFlexCeil,
 } from './ContactList.styled';
 
-export const ContactList = ({ contacts, onRemove }) => {
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getFilteredContacts);
+
   return (
     <>
       <ContactsTable>
@@ -35,9 +41,7 @@ export const ContactList = ({ contacts, onRemove }) => {
                 <ContactsTableCeil>
                   <ListBtn
                     type="button"
-                    onClick={() => {
-                      onRemove(id);
-                    }}
+                    onClick={() => dispatch(deleteContact(id))}
                   >
                     <IoIosTrash size="20" />
                   </ListBtn>
@@ -51,13 +55,13 @@ export const ContactList = ({ contacts, onRemove }) => {
   );
 };
 
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onRemove: PropTypes.func.isRequired,
-};
+// ContactList.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     })
+//   ).isRequired,
+//   onRemove: PropTypes.func.isRequired,
+// };
